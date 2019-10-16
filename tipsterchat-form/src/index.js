@@ -2,94 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Autocomplete from "./Autocomplete";
+import InputText from "./InputText";
 import * as serviceWorker from './serviceWorker';
-
-
-class ProductCategoryRow extends React.Component {
-  render() {
-    const category = this.props.category;
-    return (
-      <tr>
-        <th colSpan="2">
-          {category}
-        </th>
-      </tr>
-    );
-  }
-}
-
-class ProductRow extends React.Component {
-  render() {
-    const product = this.props.product;
-    const name = product.stocked ?
-      product.name :
-      <span style={{color: 'red'}}>
-        {product.name}
-      </span>;
-
-    return (
-      <tr>
-        <td>{name}</td>
-        <td>{product.price}</td>
-      </tr>
-    );
-  }
-}
-
-class ProductTable extends React.Component {
-  render() {
-    const rows = [];
-    let lastCategory = null;
-
-    this.props.products.forEach((product) => {
-      if (product.category !== lastCategory) {
-        rows.push(
-          <ProductCategoryRow
-            category={product.category}
-            key={product.category} />
-        );
-      }
-      rows.push(
-        <ProductRow
-          product={product}
-          key={product.name} />
-      );
-      lastCategory = product.category;
-    });
-
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
-    );
-  }
-}
 
 class SearchGame extends React.Component {
   render() {
     return (
         <label>Partido
           <input type="text" placeholder="Search..." />
-        </label>
-    );
-  }
-}
-
-class InputText extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-        <label>
-          {this.props.label}
-          <input type="text" placeholder="" />
         </label>
     );
   }
@@ -112,33 +33,31 @@ class Select extends React.Component {
 }
 
 class Bet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterText: ''
+    };
+  };
   render() {
     return (
       <form>
-        <SearchGame />
-        <InputText label="Deporte"/>
-        <InputText label="País"/>
-        <InputText label="Torneo"/>
-        <Select label="Mercado"/>
-        <Select label="Pick"/>
-        <Select label="Odds"/>
-        <ProductTable products={this.props.products} />
+      <Autocomplete
+        suggestions={this.props.matches.map(a => a.name)}
+        matches={this.props.matches}
+        />
+        <fieldset>
+          <legend>Pick</legend>
+          <Select label="Mercado"/>
+          <Select label="Pick"/>
+          <Select label="Odds"/>
+        </fieldset>
       </form>
     );
   }
 }
 
-
-const PRODUCTS = [
-  {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
-  {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
-  {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
-  {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
-  {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
-  {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
-];
-
-const matches = [
+const MATCHES = [
   {
     name: 'Barcelona - Madrid',
     sport: 'Fútbol',
@@ -218,10 +137,9 @@ const matches = [
 ];
 
 ReactDOM.render(
-  <Bet products={PRODUCTS} />,
+  <Bet matches={MATCHES} />,
   document.getElementById('root')
 );
-
 
 
 // If you want your app to work offline and load faster, you can change
