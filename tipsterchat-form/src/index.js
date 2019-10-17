@@ -1,20 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import Autocomplete from "./Autocomplete";
 import InputText from "./InputText";
 import * as serviceWorker from './serviceWorker';
-
-class SearchGame extends React.Component {
-  render() {
-    return (
-        <label>Partido
-          <input type="text" placeholder="Search..." />
-        </label>
-    );
-  }
-}
 
 class Select extends React.Component {
   constructor(props) {
@@ -36,16 +25,37 @@ class Bet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterText: ''
+      deporte: "",
+      country: "",
+      competition: ""
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   };
+
+  handleSubmit(matchName) {
+    let match = this.props.matches.find(match => match.name === matchName);
+    this.setState(
+      {
+        deporte: match.sport,
+        country: match.country,
+        competition: match.competition
+      }
+    );
+  }
+
   render() {
     return (
       <form>
-      <Autocomplete
-        suggestions={this.props.matches.map(a => a.name)}
-        matches={this.props.matches}
-        />
+        <fieldset>
+          <label>Partido</label>
+          <Autocomplete suggestions={this.props.matches.map(a => a.name)} onSubmit={this.handleSubmit}/>
+        </fieldset>
+        <fieldset>
+          <InputText value={this.state.deporte} label="Deporte"/>
+          <InputText value={this.state.country} label="País"/>
+          <InputText value={this.state.competition} label="Torneo"/>
+        </fieldset>
         <fieldset>
           <legend>Pick</legend>
           <Select label="Mercado"/>

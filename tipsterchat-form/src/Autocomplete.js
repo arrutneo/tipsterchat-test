@@ -2,8 +2,6 @@
 
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import InputText from "./InputText";
-
 
 class Autocomplete extends Component {
   static propTypes = {
@@ -53,9 +51,9 @@ class Autocomplete extends Component {
       filteredSuggestions: [],
       showSuggestions: false,
       userInput: e.currentTarget.innerText
-    });
-    console.log(InputText);
-    console.log(this.props.matches.find(match => match.name === this.state.filteredSuggestions[0]));
+    },
+    () => this.props.onSubmit(this.state.userInput));
+
   };
 
   onKeyDown = e => {
@@ -133,22 +131,13 @@ class Autocomplete extends Component {
 
     return (
       <Fragment>
-        <fieldset>
-          <label>Partido
-            <input
-              type="text"
-              onChange={onChange}
-              onKeyDown={onKeyDown}
-              value={userInput}
-            />
-          </label>
-        </fieldset>
-        <fieldset>
-          {suggestionsListComponent}
-          <InputText label="Deporte"/>
-          <InputText label="País"/>
-          <InputText label="Torneo"/>
-        </fieldset>
+        <input
+          type="text"
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={userInput}
+        />
+        {suggestionsListComponent}
       </Fragment>
     );
   }
