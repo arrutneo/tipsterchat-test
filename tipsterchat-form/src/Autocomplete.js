@@ -52,9 +52,8 @@ class Autocomplete extends Component {
       showSuggestions: false,
       userInput: e.currentTarget.innerText
     },
-    () => this.props.onSubmit(this.state.userInput));
-
-  };
+    () => this.props.onSubmit(this.state.userInput)
+  )};
 
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
