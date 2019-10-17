@@ -19,12 +19,8 @@ class Bet extends React.Component {
     this.handlePickChange = this.handlePickChange.bind(this);
   };
 
-  setCountry(countryCode) {
-    this.setState(
-      {
-        country: this.props.countries.find(country => country.id === countryCode).name
-      }
-    )
+  findCountry(countryCode) {
+    return this.props.countries.find(country => country.id === countryCode).name
   }
 
   findBookieName(bookieID) {
@@ -33,7 +29,6 @@ class Bet extends React.Component {
 
   handleSubmit(matchName) {
     let match = this.props.matches.find(match => match.name === matchName);
-    this.setCountry(match.country);
     let markets = match.bets.map(bet => bet.market);
     markets = Array.from(new Set(markets));
     markets.unshift("Select the market");
@@ -44,21 +39,13 @@ class Bet extends React.Component {
       deporte: match.sport,
       competition: match.competition,
       markets: markets,
-      picks: picks
+      picks: picks,
+      country: this.findCountry(match.country)
     });
   }
 
   handlePickChange(value) {
-    let oddsValue = this.state.match.bets.map(bet =>
-      {
-        let optionValue = this.findBookieName(bet.bookieId) + " - " + bet.odds.find(odd => odd.id === value).value;
-        return optionValue;
-      }
-    );
-    console.log(oddsValue);
-    let bookiesName = this.state.match.bets.map(bet => this.props.bookies.find(bookie => bookie.id === bet.bookieId));
-    console.log(bookiesName);
-    // let oddsValue = odds.map(odd => odd.value);
+    let oddsValue = this.state.match.bets.map(bet => this.findBookieName(bet.bookieId) + " - " + bet.odds.find(odd => odd.id === value).value);
     oddsValue.unshift("Select your odd");
     this.setState({
       oddsValue: oddsValue
