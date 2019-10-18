@@ -138,6 +138,7 @@ class Autocomplete extends Component {
           value={userInput}
           name="matchName"
           id="matchName"
+          autocomplete="new-password"
         />
         {suggestionsListComponent}
       </Fragment>
