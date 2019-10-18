@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {Fragment } from "react";
 
 class Select extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: ""
+    };
+  }
 
   onChange = e => {
     this.setState({
@@ -11,12 +18,17 @@ class Select extends React.Component {
   render() {
     const {onChange} = this;
     return (
-      <label>
-        {this.props.label}
-        <select onChange={onChange}>
-          {this.props.value && this.props.value.map((value) => <option key={value} value={value}>{value}</option>)}
+      <Fragment>
+        <label>{this.props.label}</label>
+        <select
+          class="form-control"
+          onChange={onChange}
+          name={this.props.name}
+          value={this.state.value}
+        >
+          {this.props.options && this.props.options.map((value) => <option key={value} value={value}>{value}</option>)}
         </select>
-      </label>
+      </Fragment>
     );
   }
 }

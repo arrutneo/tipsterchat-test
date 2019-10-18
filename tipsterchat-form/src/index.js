@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+import './custom.scss';
 import Bet from "./Bet";
 import * as serviceWorker from './serviceWorker';
 
@@ -106,7 +106,9 @@ const BOOKIES = [
 ]
 
 ReactDOM.render(
-  <Bet matches={MATCHES} countries={COUNTRIES} bookies={BOOKIES} />,
+  <div class="container">
+    <Bet matches={MATCHES} countries={COUNTRIES} bookies={BOOKIES} />
+  </div>,
   document.getElementById('root')
 );
 

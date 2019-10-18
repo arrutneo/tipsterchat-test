@@ -52,7 +52,7 @@ class Autocomplete extends Component {
       showSuggestions: false,
       userInput: e.currentTarget.innerText
     },
-    () => this.props.onSubmit(this.state.userInput)
+    () => this.props.handler(this.state.userInput)
   )};
 
   onKeyDown = e => {
@@ -102,7 +102,7 @@ class Autocomplete extends Component {
     if (showSuggestions && userInput) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul class="suggestions">
+          <ul class="suggestions list-group">
             {filteredSuggestions.map((suggestion, index) => {
               let className;
 
@@ -112,7 +112,7 @@ class Autocomplete extends Component {
               }
 
               return (
-                <li className={className} key={suggestion} onClick={onClick}>
+                <li className={className + " list-group-item"} key={suggestion} onClick={onClick}>
                   {suggestion}
                 </li>
               );
@@ -132,9 +132,12 @@ class Autocomplete extends Component {
       <Fragment>
         <input
           type="text"
+          class="form-control"
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}
+          name="matchName"
+          id="matchName"
         />
         {suggestionsListComponent}
       </Fragment>

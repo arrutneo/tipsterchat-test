@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { Fragment } from "react";
 
 class InputText extends React.Component {
   render() {
     return (
-        <label>
-          {this.props.label}
-          <input type="text" value={this.props.value} placeholder="" readOnly/>
-        </label>
+      <Fragment>
+        <label>{this.props.label}</label>
+        <input
+          type="text"
+          class="form-control"
+          value={this.props.value}
+          placeholder=""
+          readOnly
+          name={this.props.name}
+        />
+      </Fragment>
     );
   }
 }
