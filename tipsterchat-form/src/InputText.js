@@ -7,7 +7,7 @@ class InputText extends React.Component {
         <label>{this.props.label}</label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           value={this.props.value}
           placeholder=""
           readOnly

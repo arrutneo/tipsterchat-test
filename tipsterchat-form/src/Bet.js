@@ -45,11 +45,17 @@ class Bet extends React.Component {
   }
 
   handlePickChange(value) {
-    let oddsValue = this.state.match.bets.map(bet => this.findBookieName(bet.bookieId) + " - " + bet.odds.find(odd => odd.id === value).value);
-    oddsValue.unshift("Select your odd");
-    this.setState({
-      oddsValue: oddsValue
-    })
+    if (!Number.isNaN(Number(value))) {
+      let oddsValue = this.state.match.bets.map(bet => this.findBookieName(bet.bookieId) + " - " + bet.odds.find(odd => odd.id === value).value);
+      oddsValue.unshift("Select your odd");
+      this.setState({
+        oddsValue: oddsValue
+      });
+    } else {
+      this.setState({
+        oddsValue: ["Please select a pick"]
+      });
+    }
   }
 
   handleSubmit(event) {
@@ -63,57 +69,54 @@ class Bet extends React.Component {
     this.setState({
       json: formDataJson
     })
-    console.log(formDataJson);
   }
 
   render() {
     return (
       <Fragment>
-        <div class="row p-3">
-          <form class="col" onSubmit={this.handleSubmit}>
+        <div className="row p-3">
+          <form className="col" onSubmit={this.handleSubmit}>
             <fieldset>
-              <legend class="h1">Apuesta</legend>
-              <fieldset class="form-group">
+              <legend className="h1">Apuesta</legend>
+              <fieldset className="form-group">
                 <label>Partido</label>
                 <Autocomplete suggestions={this.props.matches.map(a => a.name)} handler={this.handleMatchFilter}/>
               </fieldset>
-              <fieldset class="form-group">
-                <div class="row">
-                  <div class="col">
+              <fieldset className="form-group">
+                <div className="row">
+                  <div className="col">
                     <InputText name="sport" value={this.state.deporte} label="Deporte"/>
                   </div>
-                  <div class="col">
+                  <div className="col">
                     <InputText name="country" value={this.state.country} label="País"/>
                   </div>
-                  <div class="col">
+                  <div className="col">
                     <InputText name="competition" value={this.state.competition} label="Torneo"/>
                   </div>
                 </div>
               </fieldset>
-              <fieldset class="form-group">
-                <legend class="h5">Pick</legend>
-                <div class="row">
-                  <div class="col">
+              <fieldset className="form-group">
+                <legend className="h5">Pick</legend>
+                <div className="row">
+                  <div className="col">
                     <Select name="mercado" options={this.state.markets} label="Mercado"/>
                   </div>
-                  <div class="col">
+                  <div className="col">
                     <Select name="pick" options={this.state.picks} label="Pick" onChange={this.handlePickChange}/>
                   </div>
-                  <div class="col">
+                  <div className="col">
                     <Select name="odds" options={this.state.oddsValue} label="Odds"/>
                   </div>
                 </div>
               </fieldset>
-              <input class="btn btn-outline-success btn-block" type="submit" tabIndex="-1" />
+              <input className="btn btn-outline-success btn-block" type="submit" tabIndex="-1" />
             </fieldset>
           </form>
         </div>
-        <div class="row p-3">
-          <div class="col">
+        <div className="row p-3">
+          <div className="col">
             <h2>JSON to send</h2>
-            <p>
-              <pre><code>{this.state.json}</code></pre>
-            </p>
+            <pre><code>{this.state.json}</code></pre>
           </div>
         </div>
       </Fragment>

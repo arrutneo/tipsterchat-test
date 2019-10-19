@@ -106,7 +106,7 @@ const BOOKIES = [
 ]
 
 ReactDOM.render(
-  <div class="container">
+  <div className="container">
     <Bet matches={MATCHES} countries={COUNTRIES} bookies={BOOKIES} />
   </div>,
   document.getElementById('root')

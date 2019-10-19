@@ -21,7 +21,7 @@ class Select extends React.Component {
       <Fragment>
         <label>{this.props.label}</label>
         <select
-          class="form-control"
+          className="form-control"
           onChange={onChange}
           name={this.props.name}
           value={this.state.value}

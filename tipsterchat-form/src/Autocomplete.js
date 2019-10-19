@@ -102,7 +102,7 @@ class Autocomplete extends Component {
     if (showSuggestions && userInput) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul class="suggestions list-group">
+          <ul className="suggestions list-group">
             {filteredSuggestions.map((suggestion, index) => {
               let className;
 
@@ -132,13 +132,13 @@ class Autocomplete extends Component {
       <Fragment>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}
           name="matchName"
           id="matchName"
-          autocomplete="new-password"
+          autoComplete="new-password"
         />
         {suggestionsListComponent}
       </Fragment>
